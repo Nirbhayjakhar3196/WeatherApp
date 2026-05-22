@@ -27,6 +27,11 @@ async function fetchData(city) {
 
     const data = await response.json()
 
+    if(data.cod === "404"){
+        alert("City not found. Please enter a valid city name.")
+        return;
+    } 
+
     const iconCode = data.weather[0].icon
 
     cityName.textContent = data.name
