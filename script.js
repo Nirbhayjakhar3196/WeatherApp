@@ -27,8 +27,17 @@ async function fetchData(city) {
 
     const data = await response.json()
 
+    const iconCode = data.weather[0].icon
+
+    cityName.textContent = data.name
+    tempa.textContent = `${data.main.temp}`
+    humidity.textContent = `${data.main.humidity}%`
+    wind.textContent = `${data.wind.speed} km/h`
+    weatherIcon.src =`https://openweathermap.org/img/wn/${iconCode}@2x.png`
+
     console.log(data);
-  
+
+    
 
     
 }
