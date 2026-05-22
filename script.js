@@ -15,34 +15,50 @@ searchBtn.addEventListener('click' , () => {
     }
 
     fetchData(storedValue)
+ 
+})
 
+cityInput.addEventListener('keydown' ,(e) => {
+
+    if(e.key === "Enter"){
+        searchBtn.click()
+    }
     
 })
 
 async function fetchData(city) {
 
-    const apiKey = "8d446928a347191ebf7b3f8e4a17bd73"
+    searchBtn.disabled = true;
+    searchBtn.textContent = "Searching...."
 
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
 
-    const data = await response.json()
+    try {
+        const apiKey = "8d446928a347191ebf7b3f8e4a17bd73"
 
-    if(data.cod === "404"){
-        alert("City not found. Please enter a valid city name.")
-        return;
-    } 
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
 
-    const iconCode = data.weather[0].icon
+        const data = await response.json()
 
-    cityName.textContent = data.name
-    tempa.textContent = `${data.main.temp}`
-    humidity.textContent = `${data.main.humidity}%`
-    wind.textContent = `${data.wind.speed} km/h`
-    weatherIcon.src =`https://openweathermap.org/img/wn/${iconCode}@2x.png`
+        if(data.cod === "404"){
+            alert("City not found. Please enter a valid city name.")
+            return;
+        } 
 
-    console.log(data);
+        const iconCode = data.weather[0].icon
 
-    
+        cityName.textContent = data.name
+        tempa.textContent = `${data.main.temp}°C`
+        humidity.textContent = `${data.main.humidity}%`
+        wind.textContent = `${data.wind.speed} km/h`
+        weatherIcon.src =`https://openweathermap.org/img/wn/${iconCode}@2x.png`
 
-    
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+    finally{
+        searchBtn.disabled = false;
+        searchBtn.textContent = "Search"
+
+    }
 }
