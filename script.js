@@ -14,7 +14,10 @@ searchBtn.addEventListener('click' , () => {
         return
     }
 
+    
+
     fetchData(storedValue)
+    
  
 })
 
@@ -29,7 +32,7 @@ cityInput.addEventListener('keydown' ,(e) => {
 async function fetchData(city) {
 
     searchBtn.disabled = true;
-    searchBtn.textContent = "Searching...."
+    searchBtn.textContent = "Searching.."
 
 
     try {
@@ -51,6 +54,9 @@ async function fetchData(city) {
         humidity.textContent = `${data.main.humidity}%`
         wind.textContent = `${data.wind.speed} km/h`
         weatherIcon.src =`https://openweathermap.org/img/wn/${iconCode}@2x.png`
+
+        cityInput.value = ""
+
 
         console.log(data);
     } catch (error) {
